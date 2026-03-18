@@ -1768,20 +1768,13 @@ function downloadPDF() {
     </div>
   </div>`;
 
-  const container = document.createElement('div');
-  container.style.cssText = 'position:fixed;top:0;left:-9999px;width:794px;background:#fff;';
-  container.innerHTML = html;
-  document.body.appendChild(container);
-
   html2pdf().set({
-    margin: [10, 0, 10, 0],
+    margin: 0,
     filename: `Цифровые_компетенции_${today.replace(/ /g,'_')}.pdf`,
     image: { type: 'jpeg', quality: 0.98 },
-    html2canvas: { scale: 2, useCORS: true, logging: false, scrollX: 0, scrollY: 0 },
-    jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' },
-    pagebreak: { mode: ['css'], before: '.pdf-page-break' }
-  }).from(container).save().then(() => {
-    document.body.removeChild(container);
+    html2canvas: { scale: 2, useCORS: true, logging: false },
+    jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
+  }).from(html, 'string').save().then(() => {
     btn.innerHTML = getIcon('download', 16, 'currentColor') + ' Скачать PDF';
     btn.disabled = false;
   });
