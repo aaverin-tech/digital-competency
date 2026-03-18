@@ -98,9 +98,9 @@
 
   /* ── WELCOME ── */
   .welcome-hero { text-align: center; padding: 48px 0 32px; }
-  .welcome-hero .big-emoji {
-    font-size: 80px; display: block; margin-bottom: 20px;
-    filter: drop-shadow(0 8px 16px rgba(79,70,229,.25));
+  .welcome-hero .hero-icon {
+    display: flex; justify-content: center; margin-bottom: 20px;
+    filter: drop-shadow(0 8px 20px rgba(79,70,229,.3));
   }
   .welcome-hero h1 {
     font-size: clamp(28px, 5vw, 40px); font-weight: 900;
@@ -140,7 +140,7 @@
     transform: translateY(-5px);
     box-shadow: var(--shadow-lg); border-color: var(--p-mid);
   }
-  .cat-thumb .ico { font-size: 36px; margin-bottom: 10px; display: block; }
+  .cat-thumb .ico { margin-bottom: 10px; display: flex; justify-content: center; align-items: center; height: 40px; }
   .cat-thumb .nm { font-size: 13px; font-weight: 700; color: var(--text); }
   .cat-thumb .cnt { font-size: 11px; color: var(--muted); margin-top: 3px; }
 
@@ -150,7 +150,7 @@
     padding: 24px 28px; margin: 32px 0; text-align: left;
     display: flex; gap: 20px; align-items: flex-start;
   }
-  .algo-card .ai { font-size: 32px; flex-shrink: 0; }
+  .algo-card .ai { flex-shrink: 0; display: flex; align-items: flex-start; padding-top: 2px; }
   .algo-card h3 { font-size: 15px; font-weight: 700; margin-bottom: 6px; color: var(--p); }
   .algo-card ul { padding-left: 18px; }
   .algo-card li { font-size: 14px; color: var(--muted); margin-bottom: 4px; }
@@ -186,7 +186,7 @@
     display: flex; gap: 20px; align-items: flex-start;
     box-shadow: var(--shadow-sm);
   }
-  .cat-header-ico { font-size: 52px; flex-shrink: 0; line-height: 1; }
+  .cat-header-ico { flex-shrink: 0; display: flex; align-items: center; justify-content: center; width: 56px; height: 56px; background: var(--p-light); border-radius: 16px; }
   .cat-header-body { flex: 1; }
   .cat-badge {
     display: inline-block; padding: 3px 12px;
@@ -229,8 +229,8 @@
     font-size: 17px; font-weight: 800; flex: 1; line-height: 1.25;
   }
   .comp-check {
-    font-size: 20px; color: var(--green);
     opacity: 0; transition: opacity .3s; flex-shrink: 0;
+    display: flex; align-items: center;
   }
   .comp-card.done .comp-check { opacity: 1; }
   .comp-desc {
@@ -356,7 +356,7 @@
     gap: 10px; margin-bottom: 16px;
   }
   .cat-row:last-child { margin-bottom: 0; }
-  .cat-row-ico { font-size: 18px; width: 26px; text-align: center; flex-shrink: 0; }
+  .cat-row-ico { width: 26px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
   .cat-row-info { flex: 1; min-width: 0; }
   .cat-row-name {
     font-size: 12px; font-weight: 600;
@@ -386,7 +386,7 @@
     padding: 40px; text-align: center;
     border: 1.5px solid var(--border);
   }
-  .recs-empty .big { font-size: 56px; margin-bottom: 12px; display: block; }
+  .recs-empty .big { margin-bottom: 12px; display: flex; justify-content: center; }
   .recs-empty p { color: var(--muted); font-size: 15px; }
 
   .rec-card {
@@ -402,7 +402,7 @@
     transform: translateX(4px);
     box-shadow: var(--shadow);
   }
-  .rec-ico { font-size: 28px; flex-shrink: 0; line-height: 1; }
+  .rec-ico { flex-shrink: 0; display: flex; align-items: flex-start; padding-top: 2px; }
   .rec-body h4 { font-size: 14px; font-weight: 800; margin-bottom: 5px; }
   .rec-body p { font-size: 13px; color: var(--muted); line-height: 1.55; }
   .rec-pill {
@@ -458,7 +458,7 @@
     background: var(--p-light);
     box-shadow: 0 0 0 4px rgba(79,70,229,.15);
   }
-  .role-card .r-ico { font-size: 44px; display: block; margin-bottom: 12px; }
+  .role-card .r-ico { display: flex; justify-content: center; margin-bottom: 12px; }
   .role-card .r-name { font-size: 18px; font-weight: 800; margin-bottom: 6px; }
   .role-card .r-desc { font-size: 13px; color: var(--muted); line-height: 1.45; }
   .role-divider {
@@ -504,7 +504,16 @@
 <div id="s-welcome" class="screen active">
   <div class="wrap">
     <div class="welcome-hero">
-      <span class="big-emoji">🚀</span>
+      <div class="hero-icon">
+        <svg width="80" height="80" viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round">
+          <defs><linearGradient id="hg" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#4F46E5"/><stop offset="100%" stop-color="#7C3AED"/></linearGradient></defs>
+          <path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z" stroke="url(#hg)" stroke-width="1.5"/>
+          <path d="m3.5 11.5 2 2.5" stroke="url(#hg)" stroke-width="1.5"/>
+          <path d="M12 2C6.5 10 4 16 4 16s6-2.5 14-8c0 0-2-6-6-6z" stroke="url(#hg)" stroke-width="1.5"/>
+          <path d="M22 2c0 0-6 2-8 6-2 3.5-2 8-2 8s4.5-.5 8-2c0 0 2-4 2-12z" stroke="url(#hg)" stroke-width="1.5"/>
+          <circle cx="15" cy="9" r="1.5" fill="url(#hg)" stroke="none"/>
+        </svg>
+      </div>
       <h1>Оценка цифровых<br>компетенций</h1>
       <p class="lead">Узнай свой уровень цифровых навыков, получи персональный результат и рекомендации по развитию</p>
     </div>
@@ -519,7 +528,7 @@
     <div class="cats-grid" id="catThumbs"></div>
 
     <div class="algo-card">
-      <div class="ai">💡</div>
+      <div class="ai"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#4F46E5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1 .2 2.2 1.5 3.5.7.7 1.3 1.5 1.5 2.5"/><path d="M9 18h6"/><path d="M10 22h4"/></svg></div>
       <div>
         <h3>Как проходить оценку</h3>
         <ul>
@@ -535,12 +544,12 @@
       <div class="role-divider">Выбери свою роль, чтобы начать</div>
       <div class="role-grid">
         <button class="role-card" id="role-employee" onclick="selectRole('employee')">
-          <span class="r-ico">👤</span>
+          <span class="r-ico"><svg width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="#4F46E5" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></span>
           <div class="r-name">Сотрудник</div>
           <div class="r-desc">Оценка цифровых навыков для работы в команде</div>
         </button>
         <button class="role-card" id="role-manager" onclick="selectRole('manager')">
-          <span class="r-ico">👔</span>
+          <span class="r-ico"><svg width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="#7C3AED" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg></span>
           <div class="r-name">Руководитель</div>
           <div class="r-desc">Расширенная оценка для лидеров команд</div>
         </button>
@@ -591,17 +600,19 @@
     </div>
 
     <div class="recs-section">
-      <h2>✨ Рекомендации по развитию</h2>
+      <h2><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#F59E0B" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:middle;margin-right:8px;margin-bottom:2px"><path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3z"/></svg>Рекомендации по развитию</h2>
       <div id="recsList"></div>
     </div>
 
     <div class="results-actions">
       <div style="display:flex; gap:12px; justify-content:center; flex-wrap:wrap;">
         <button class="btn btn-primary" onclick="downloadPDF()" id="btnPDF">
-          ⬇ Скачать PDF
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+          Скачать PDF
         </button>
         <button class="btn btn-ghost" onclick="restart()">
-          ↺ Пройти заново
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/></svg>
+          Пройти заново
         </button>
       </div>
       <p>PDF формируется прямо в браузере — данные никуда не отправляются</p>
@@ -616,7 +627,7 @@
 const CATEGORIES_MANAGER = [
   {
     id: 'info',
-    icon: '📊',
+    icon: 'chart',
     title: 'Информационная грамотность',
     subtitle: 'и работа с данными',
     desc: 'Способность эффективно находить, критически оценивать информацию и использовать данные для принятия обоснованных бизнес-решений',
@@ -667,7 +678,7 @@ const CATEGORIES_MANAGER = [
   },
   {
     id: 'comm',
-    icon: '💬',
+    icon: 'message',
     title: 'Коммуникация и коллаборация',
     subtitle: 'в цифровой среде',
     desc: 'Способность эффективно взаимодействовать в распределённой цифровой среде, соблюдая нормы цифрового этикета',
@@ -746,7 +757,7 @@ const CATEGORIES_MANAGER = [
   },
   {
     id: 'create',
-    icon: '⚡',
+    icon: 'zap',
     title: 'Создание цифрового',
     subtitle: 'контента и продуктов',
     desc: 'Способность создавать новое с помощью технологий, выходя за рамки простого потребления готовых решений',
@@ -811,7 +822,7 @@ const CATEGORIES_MANAGER = [
   },
   {
     id: 'security',
-    icon: '🛡️',
+    icon: 'shield',
     title: 'Безопасность и',
     subtitle: 'решение проблем',
     desc: 'Привычка мыслить в парадигме безопасности и самостоятельность в решении технических проблем',
@@ -876,7 +887,7 @@ const CATEGORIES_MANAGER = [
   },
   {
     id: 'strategy',
-    icon: '🎯',
+    icon: 'target',
     title: 'Стратегическое',
     subtitle: 'использование технологий',
     desc: 'Способность видеть технологические возможности и использовать их для достижения бизнес-целей',
@@ -1210,6 +1221,28 @@ const CATEGORIES_EMPLOYEE = [
 
 const TOTAL_MAX = 54; // 18 компетенций × 3 балла
 
+const ICONS = {
+  chart:     '<rect x="3" y="12" width="4" height="9" rx="1"/><rect x="10" y="7" width="4" height="14" rx="1"/><rect x="17" y="3" width="4" height="18" rx="1"/>',
+  message:   '<path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>',
+  zap:       '<polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>',
+  shield:    '<path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>',
+  target:    '<circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/>',
+  user:      '<path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/>',
+  briefcase: '<rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/>',
+  rocket:    '<path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z"/><path d="m3.5 11.5 2 2.5"/><path d="M12 2C6.5 10 4 16 4 16s6-2.5 14-8c0 0-2-6-6-6z"/><path d="M22 2c0 0-6 2-8 6-2 3.5-2 8-2 8s4.5-.5 8-2c0 0 2-4 2-12z"/><circle cx="15" cy="9" r="1.5" fill="currentColor" stroke="none"/>',
+  bulb:      '<path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1 .2 2.2 1.5 3.5.7.7 1.3 1.5 1.5 2.5"/><path d="M9 18h6"/><path d="M10 22h4"/>',
+  trophy:    '<path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/><path d="M4 22h16"/><path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"/><path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"/><path d="M18 2H6v7a6 6 0 0 0 12 0V2z"/>',
+  check:     '<polyline points="20 6 9 17 4 12"/>',
+  warning:   '<path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/>',
+  download:  '<path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/>',
+  refresh:   '<path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/>'
+};
+const CAT_COLORS = { info: '#3B82F6', comm: '#8B5CF6', create: '#F59E0B', security: '#10B981', strategy: '#EF4444' };
+function getIcon(name, size, color, sw) {
+  size = size || 24; color = color || 'currentColor'; sw = sw || (size >= 40 ? 1.8 : 2);
+  return '<svg width="' + size + '" height="' + size + '" viewBox="0 0 24 24" fill="none" stroke="' + color + '" stroke-width="' + sw + '" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:middle;flex-shrink:0">' + (ICONS[name] || '') + '</svg>';
+}
+
 /* ═══════════════════════════════════════════════════════════
    STATE
 ═══════════════════════════════════════════════════════════ */
@@ -1225,12 +1258,13 @@ let CATEGORIES = null;
 (function init() {
   // Build category thumbnails using manager data (same 5 categories for both roles)
   const grid = document.getElementById('catThumbs');
+  const catNames = { info: 'Информация и данные', comm: 'Коммуникация', create: 'Создание и ИИ', security: 'Безопасность', strategy: 'Стратегия' };
   CATEGORIES_MANAGER.forEach(cat => {
     const div = document.createElement('div');
     div.className = 'cat-thumb';
     div.innerHTML = `
-      <span class="ico">${cat.icon}</span>
-      <div class="nm">${cat.icon === '📊' ? 'Информация и данные' : cat.icon === '💬' ? 'Коммуникация' : cat.icon === '⚡' ? 'Создание и ИИ' : cat.icon === '🛡️' ? 'Безопасность' : 'Стратегия'}</div>
+      <div class="ico">${getIcon(cat.icon, 36, CAT_COLORS[cat.id])}</div>
+      <div class="nm">${catNames[cat.id]}</div>
       <div class="cnt">${cat.competencies.length} компетенции</div>
     `;
     grid.appendChild(div);
@@ -1265,7 +1299,7 @@ function startAssessment() {
   CATEGORIES.forEach((cat, i) => {
     const span = document.createElement('span');
     span.className = 'bar-lbl';
-    span.textContent = cat.icon + ' ' + cat.title.split(' ').slice(0,2).join(' ');
+    span.innerHTML = getIcon(cat.icon, 11, 'rgba(255,255,255,.8)') + ' ' + cat.title.split(' ').slice(0,2).join(' ');
     span.id = 'lbl-' + i;
     lbls.appendChild(span);
   });
@@ -1281,7 +1315,7 @@ function renderCategory(idx) {
 
   let html = `
     <div class="cat-header">
-      <div class="cat-header-ico">${cat.icon}</div>
+      <div class="cat-header-ico">${getIcon(cat.icon, 30, CAT_COLORS[cat.id])}</div>
       <div class="cat-header-body">
         <div class="cat-badge">Категория ${idx + 1} из ${CATEGORIES.length}</div>
         <h2>${cat.title} ${cat.subtitle}</h2>
@@ -1298,7 +1332,7 @@ function renderCategory(idx) {
         <div class="comp-card-top">
           <div class="comp-num" id="num-${comp.id}">${globalNum}</div>
           <div class="comp-title">${comp.title}</div>
-          <div class="comp-check">✓</div>
+          <div class="comp-check">${getIcon('check', 20, '#10B981')}</div>
         </div>
         <div class="comp-desc">${comp.desc}</div>
         <div class="levels-lbl">Выбери свой уровень</div>
@@ -1324,7 +1358,7 @@ function renderCategory(idx) {
 
   html += `
     <div class="warn-msg" id="warn-${idx}">
-      ⚠️ Пожалуйста, ответь на все вопросы этой категории, прежде чем продолжить.
+      ${getIcon('warning', 16, '#92400E')} Пожалуйста, ответь на все вопросы этой категории, прежде чем продолжить.
     </div>
     <div class="nav-row">
       ${idx > 0
@@ -1466,7 +1500,7 @@ function buildResults() {
 
   // Role badge
   const roleBadge = document.getElementById('roleBadgeResult');
-  roleBadge.textContent = currentRole === 'manager' ? '👔 Оценка руководителя' : '👤 Оценка сотрудника';
+  roleBadge.innerHTML = (currentRole === 'manager' ? getIcon('briefcase', 14, '#4F46E5') : getIcon('user', 14, '#4F46E5')) + ' ' + (currentRole === 'manager' ? 'Оценка руководителя' : 'Оценка сотрудника');
 
   // Set score display
   document.getElementById('rScore').textContent = total;
@@ -1486,7 +1520,7 @@ function buildResults() {
   const barsEl = document.getElementById('catBars');
   barsEl.innerHTML = catScores.map(cs => `
     <div class="cat-row">
-      <div class="cat-row-ico">${cs.icon}</div>
+      <div class="cat-row-ico">${getIcon(cs.icon, 18, CAT_COLORS[cs.id])}</div>
       <div class="cat-row-info">
         <div class="cat-row-name">${cs.title}</div>
         <div class="cat-bar">
@@ -1566,7 +1600,7 @@ function buildRecs() {
       const score = answers[comp.id] || 1;
       if (score < 3) {
         const recIdx = score - 1; // 0 for basic, 1 for medium
-        recs.push({ comp, score, rec: comp.recs[recIdx], catIcon: cat.icon });
+        recs.push({ comp, score, rec: comp.recs[recIdx], catIcon: cat.icon, catId: cat.id });
       }
     });
   });
@@ -1577,7 +1611,7 @@ function buildRecs() {
   if (recs.length === 0) {
     el.innerHTML = `
       <div class="recs-empty">
-        <span class="big">🏆</span>
+        <div class="big">${getIcon('trophy', 56, '#F59E0B')}</div>
         <p>Wow! По всем компетенциям ты на продвинутом уровне.<br>
         Ты — настоящий цифровой лидер. Делись знаниями с командой!</p>
       </div>
@@ -1591,7 +1625,7 @@ function buildRecs() {
 
   el.innerHTML = recs.slice(0, 12).map(r => `
     <div class="rec-card" style="border-left-color:${colorMap[r.score]}">
-      <div class="rec-ico">${r.catIcon}</div>
+      <div class="rec-ico">${getIcon(r.catIcon, 26, CAT_COLORS[r.catId])}</div>
       <div class="rec-body">
         <div class="rec-pill ${pillMap[r.score]}">${labelMap[r.score]}</div>
         <h4>${r.comp.title}</h4>
@@ -1630,7 +1664,7 @@ function downloadPDF() {
   CATEGORIES.forEach(cat => {
     cat.competencies.forEach(comp => {
       const score = answers[comp.id] || 1;
-      if (score < 3) recs.push({ comp, score, rec: comp.recs[score - 1], catTitle: cat.title, catIcon: cat.icon });
+      if (score < 3) recs.push({ comp, score, rec: comp.recs[score - 1], catTitle: cat.title, catIcon: cat.icon, catId: cat.id });
     });
   });
   recs.sort((a, b) => a.score - b.score);
@@ -1641,7 +1675,7 @@ function downloadPDF() {
   // All competencies table
   const allRows = CATEGORIES.flatMap(cat =>
     cat.competencies.map(comp => ({
-      cat: cat.title, catIcon: cat.icon,
+      cat: cat.title, catIcon: cat.icon, catId: cat.id,
       title: comp.title, score: answers[comp.id] || 0
     }))
   );
@@ -1659,7 +1693,7 @@ function downloadPDF() {
       <div>
         <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:#4F46E5;margin-bottom:6px;">РТК ИТ · Цифровые компетенции</div>
         <div style="font-size:26px;font-weight:900;letter-spacing:-1px;line-height:1.1;">Результаты самооценки</div>
-        <div style="font-size:12px;color:#64748B;margin-top:6px;">${currentRole === 'manager' ? '👔 Оценка руководителя' : '👤 Оценка сотрудника'}</div>
+        <div style="font-size:12px;color:#64748B;margin-top:6px;">${currentRole === 'manager' ? 'Оценка руководителя' : 'Оценка сотрудника'}</div>
       </div>
       <div style="text-align:right;font-size:12px;color:#64748B;margin-top:6px;">${today}</div>
     </div>
@@ -1677,7 +1711,7 @@ function downloadPDF() {
         ${catScores.map(cs => `
           <div style="margin-bottom:8px;">
             <div style="display:flex;justify-content:space-between;font-size:12px;font-weight:600;">
-              <span>${cs.icon} ${cs.title}</span>
+              <span>${getIcon(cs.icon, 12, CAT_COLORS[cs.id])} ${cs.title}</span>
               <span style="color:#4F46E5;">${cs.pct}%</span>
             </div>
             ${barFn(cs.pct, cs.pct >= 80 ? '#10B981' : cs.pct >= 55 ? '#8B5CF6' : cs.pct >= 35 ? '#3B82F6' : '#F59E0B')}
@@ -1700,7 +1734,7 @@ function downloadPDF() {
           ${allRows.map((r, i) => `
           <tr style="background:${i % 2 === 0 ? '#fff' : '#FAFBFF'};">
             <td style="padding:7px 10px;border-bottom:1px solid #E2E8F0;">
-              <span style="color:#64748B;font-size:10px;">${r.catIcon} ${r.cat}</span><br>
+              <span style="color:#64748B;font-size:10px;">${getIcon(r.catIcon, 11, CAT_COLORS[r.catId])} ${r.cat}</span><br>
               <span style="font-weight:600;">${r.title}</span>
             </td>
             <td style="padding:7px 10px;border-bottom:1px solid #E2E8F0;text-align:center;">
@@ -1718,13 +1752,13 @@ function downloadPDF() {
       <div style="font-size:15px;font-weight:900;margin-bottom:14px;letter-spacing:-.3px;">Рекомендации по развитию</div>
       ${recs.slice(0, 10).map(r => `
         <div style="border-left:4px solid ${r.score === 1 ? '#F59E0B' : '#3B82F6'};padding:12px 16px;margin-bottom:12px;background:${r.score === 1 ? '#FFFBEB' : '#EFF6FF'};border-radius:0 10px 10px 0;">
-          <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:${r.score === 1 ? '#92400E' : '#1E40AF'};margin-bottom:4px;">${r.catIcon} ${r.catTitle} · ${r.score === 1 ? 'Базовый уровень' : 'Средний уровень'}</div>
+          <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:${r.score === 1 ? '#92400E' : '#1E40AF'};margin-bottom:4px;">${getIcon(r.catIcon, 11, CAT_COLORS[r.catId])} ${r.catTitle} · ${r.score === 1 ? 'Базовый уровень' : 'Средний уровень'}</div>
           <div style="font-size:13px;font-weight:700;margin-bottom:4px;">${r.comp.title}</div>
           <div style="font-size:12px;color:#475569;line-height:1.55;">${r.rec}</div>
         </div>`).join('')}
     </div>` : `
     <div style="background:#D1FAE5;border-radius:12px;padding:20px;text-align:center;">
-      <div style="font-size:28px;margin-bottom:8px;">🏆</div>
+      <div style="margin-bottom:8px;">${getIcon('trophy', 28, '#10B981')}</div>
       <div style="font-weight:700;color:#065F46;">Продвинутый уровень по всем компетенциям!</div>
     </div>`}
 
