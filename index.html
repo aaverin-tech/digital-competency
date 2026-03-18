@@ -1,0 +1,1426 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Цифровые компетенции РТК ИТ — Самооценка</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --p: #4F46E5;
+    --p2: #7C3AED;
+    --p-light: #EEF2FF;
+    --p-mid: #C7D2FE;
+    --cyan: #06B6D4;
+    --green: #10B981;
+    --amber: #F59E0B;
+    --red: #EF4444;
+    --bg: #F1F5F9;
+    --card: #FFFFFF;
+    --text: #0F172A;
+    --muted: #64748B;
+    --border: #E2E8F0;
+    --grad: linear-gradient(135deg, #4F46E5 0%, #7C3AED 100%);
+    --shadow-sm: 0 1px 3px rgba(0,0,0,.08), 0 1px 2px rgba(0,0,0,.06);
+    --shadow: 0 4px 16px rgba(0,0,0,.08);
+    --shadow-lg: 0 12px 40px rgba(79,70,229,.18);
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    font-size: 15px;
+    line-height: 1.6;
+  }
+
+  /* ── HEADER ── */
+  .hdr {
+    background: var(--grad);
+    position: sticky; top: 0; z-index: 200;
+    box-shadow: var(--shadow-lg);
+  }
+  .hdr-inner {
+    max-width: 860px; margin: 0 auto;
+    padding: 14px 24px 0;
+    display: flex; align-items: center; gap: 16px;
+  }
+  .hdr-logo {
+    font-size: 18px; font-weight: 900; color: #fff;
+    letter-spacing: -.5px; white-space: nowrap;
+  }
+  .hdr-logo span { opacity: .55; font-weight: 500; }
+  .hdr-step {
+    margin-left: auto; font-size: 13px; color: rgba(255,255,255,.75);
+    font-weight: 500; white-space: nowrap;
+  }
+  .hdr-bar { max-width: 860px; margin: 0 auto; padding: 10px 24px 14px; }
+  .bar-bg {
+    background: rgba(255,255,255,.2); height: 5px;
+    border-radius: 3px; overflow: hidden;
+  }
+  .bar-fill {
+    height: 100%; background: #fff; border-radius: 3px;
+    transition: width .6s cubic-bezier(.4,0,.2,1);
+  }
+  .bar-labels {
+    display: flex; gap: 4px; margin-top: 6px; overflow: hidden;
+  }
+  .bar-lbl {
+    font-size: 10px; color: rgba(255,255,255,.5);
+    font-weight: 500; flex: 1; text-align: center;
+    cursor: pointer; transition: color .2s; white-space: nowrap;
+    overflow: hidden; text-overflow: ellipsis;
+  }
+  .bar-lbl.done { color: rgba(255,255,255,.8); }
+  .bar-lbl.active { color: #fff; font-weight: 700; }
+
+  /* ── SCREENS ── */
+  .screen { display: none; }
+  .screen.active {
+    display: block;
+    animation: slideUp .45s cubic-bezier(.4,0,.2,1);
+  }
+  @keyframes slideUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .wrap { max-width: 860px; margin: 0 auto; padding: 36px 24px 80px; }
+
+  /* ── WELCOME ── */
+  .welcome-hero { text-align: center; padding: 48px 0 32px; }
+  .welcome-hero .big-emoji {
+    font-size: 80px; display: block; margin-bottom: 20px;
+    filter: drop-shadow(0 8px 16px rgba(79,70,229,.25));
+  }
+  .welcome-hero h1 {
+    font-size: clamp(28px, 5vw, 40px); font-weight: 900;
+    letter-spacing: -1.5px; margin-bottom: 16px;
+    background: var(--grad); -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent; line-height: 1.1;
+  }
+  .welcome-hero .lead {
+    font-size: 17px; color: var(--muted);
+    max-width: 540px; margin: 0 auto 32px; line-height: 1.65;
+  }
+
+  .stats-row {
+    display: flex; justify-content: center; gap: 48px;
+    margin: 40px 0; flex-wrap: wrap;
+  }
+  .stat { text-align: center; }
+  .stat-n {
+    font-size: 40px; font-weight: 900;
+    background: var(--grad); -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent; line-height: 1;
+  }
+  .stat-l { font-size: 13px; color: var(--muted); margin-top: 4px; font-weight: 500; }
+
+  .cats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(148px, 1fr));
+    gap: 14px; margin: 36px 0;
+  }
+  .cat-thumb {
+    background: var(--card); border-radius: 18px; padding: 22px 16px;
+    text-align: center; border: 1.5px solid var(--border);
+    transition: transform .2s, box-shadow .2s, border-color .2s;
+    cursor: default;
+  }
+  .cat-thumb:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-lg); border-color: var(--p-mid);
+  }
+  .cat-thumb .ico { font-size: 36px; margin-bottom: 10px; display: block; }
+  .cat-thumb .nm { font-size: 13px; font-weight: 700; color: var(--text); }
+  .cat-thumb .cnt { font-size: 11px; color: var(--muted); margin-top: 3px; }
+
+  .algo-card {
+    background: linear-gradient(135deg, #EEF2FF 0%, #F5F3FF 100%);
+    border: 1.5px solid var(--p-mid); border-radius: 20px;
+    padding: 24px 28px; margin: 32px 0; text-align: left;
+    display: flex; gap: 20px; align-items: flex-start;
+  }
+  .algo-card .ai { font-size: 32px; flex-shrink: 0; }
+  .algo-card h3 { font-size: 15px; font-weight: 700; margin-bottom: 6px; color: var(--p); }
+  .algo-card ul { padding-left: 18px; }
+  .algo-card li { font-size: 14px; color: var(--muted); margin-bottom: 4px; }
+
+  /* ── BUTTONS ── */
+  .btn {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 13px 26px; border-radius: 13px;
+    font-size: 15px; font-weight: 700; cursor: pointer;
+    border: none; text-decoration: none; transition: all .22s;
+    font-family: inherit;
+  }
+  .btn-primary {
+    background: var(--grad); color: #fff;
+    box-shadow: 0 4px 14px rgba(79,70,229,.35);
+  }
+  .btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(79,70,229,.45);
+  }
+  .btn-ghost {
+    background: var(--card); color: var(--text);
+    border: 1.5px solid var(--border);
+  }
+  .btn-ghost:hover { background: var(--bg); }
+  .btn-lg { padding: 16px 40px; font-size: 17px; border-radius: 16px; }
+
+  /* ── CATEGORY SCREEN ── */
+  .cat-header {
+    background: var(--card); border-radius: 22px;
+    padding: 28px; margin-bottom: 28px;
+    border: 1.5px solid var(--border);
+    display: flex; gap: 20px; align-items: flex-start;
+    box-shadow: var(--shadow-sm);
+  }
+  .cat-header-ico { font-size: 52px; flex-shrink: 0; line-height: 1; }
+  .cat-header-body { flex: 1; }
+  .cat-badge {
+    display: inline-block; padding: 3px 12px;
+    background: var(--p-light); color: var(--p);
+    border-radius: 20px; font-size: 11px; font-weight: 700;
+    text-transform: uppercase; letter-spacing: .06em;
+    margin-bottom: 8px;
+  }
+  .cat-header-body h2 {
+    font-size: 22px; font-weight: 900;
+    letter-spacing: -.5px; margin-bottom: 8px;
+  }
+  .cat-header-body p { color: var(--muted); font-size: 14px; }
+
+  /* ── COMPETENCY CARD ── */
+  .comp-card {
+    background: var(--card); border-radius: 20px;
+    padding: 26px; margin-bottom: 18px;
+    border: 2px solid var(--border);
+    transition: border-color .25s, box-shadow .25s;
+    box-shadow: var(--shadow-sm);
+  }
+  .comp-card.done {
+    border-color: #A5B4FC;
+    background: linear-gradient(135deg, #FAFBFF 0%, #F5F3FF 100%);
+  }
+  .comp-card-top {
+    display: flex; align-items: flex-start; gap: 12px; margin-bottom: 6px;
+  }
+  .comp-num {
+    width: 30px; height: 30px; border-radius: 10px;
+    background: var(--bg); display: flex; align-items: center;
+    justify-content: center; font-size: 13px; font-weight: 800;
+    color: var(--muted); flex-shrink: 0; transition: all .25s;
+  }
+  .comp-card.done .comp-num {
+    background: #D1FAE5; color: #065F46;
+  }
+  .comp-title {
+    font-size: 17px; font-weight: 800; flex: 1; line-height: 1.25;
+  }
+  .comp-check {
+    font-size: 20px; color: var(--green);
+    opacity: 0; transition: opacity .3s; flex-shrink: 0;
+  }
+  .comp-card.done .comp-check { opacity: 1; }
+  .comp-desc {
+    font-size: 13.5px; color: var(--muted);
+    margin: 8px 0 22px 42px; line-height: 1.6;
+  }
+
+  .levels-lbl {
+    font-size: 11px; font-weight: 700;
+    text-transform: uppercase; letter-spacing: .08em;
+    color: var(--muted); margin: 0 0 12px 42px;
+  }
+
+  .levels {
+    display: grid; grid-template-columns: repeat(3,1fr);
+    gap: 10px; padding-left: 42px;
+  }
+  .lv { position: relative; }
+  .lv input { position: absolute; opacity: 0; width: 0; height: 0; }
+  .lv-card {
+    display: flex; flex-direction: column;
+    padding: 14px 13px; border-radius: 14px;
+    border: 2px solid var(--border); cursor: pointer;
+    transition: all .2s; height: 100%;
+    background: var(--card);
+  }
+  .lv-card:hover {
+    border-color: #A5B4FC; background: #F5F3FF;
+    transform: translateY(-2px); box-shadow: var(--shadow);
+  }
+  .lv input:checked ~ .lv-card {
+    border-color: var(--p);
+    background: var(--p-light);
+    box-shadow: 0 0 0 3px rgba(79,70,229,.15);
+  }
+  .lv-badge {
+    display: inline-block; padding: 3px 9px;
+    border-radius: 20px; font-size: 10px; font-weight: 800;
+    text-transform: uppercase; letter-spacing: .06em;
+    margin-bottom: 7px; align-self: flex-start;
+  }
+  .lv1 .lv-badge { background: #FEF3C7; color: #92400E; }
+  .lv2 .lv-badge { background: #DBEAFE; color: #1E40AF; }
+  .lv3 .lv-badge { background: #D1FAE5; color: #065F46; }
+  .lv1 input:checked ~ .lv-card .lv-badge { background: #F59E0B; color: #fff; }
+  .lv2 input:checked ~ .lv-card .lv-badge { background: #3B82F6; color: #fff; }
+  .lv3 input:checked ~ .lv-card .lv-badge { background: #10B981; color: #fff; }
+  .lv-text {
+    font-size: 12px; color: var(--muted); line-height: 1.5; flex: 1;
+  }
+  .lv input:checked ~ .lv-card .lv-text { color: var(--text); }
+
+  /* ── NAV BUTTONS ── */
+  .nav-row {
+    display: flex; justify-content: space-between; align-items: center;
+    margin-top: 32px; padding-top: 24px;
+    border-top: 1.5px solid var(--border);
+  }
+  .nav-hint { font-size: 13px; color: var(--muted); }
+  .nav-hint b { color: var(--text); }
+
+  .warn-msg {
+    background: #FEF3C7; border: 1.5px solid #FCD34D;
+    border-radius: 12px; padding: 12px 16px; margin-top: 16px;
+    font-size: 14px; color: #92400E; display: none;
+  }
+  .warn-msg.show { display: block; animation: slideUp .3s ease; }
+
+  /* ── RESULTS ── */
+  .results-top {
+    text-align: center; padding: 40px 0 24px;
+  }
+  .ring-wrap {
+    width: 180px; height: 180px;
+    position: relative; margin: 0 auto 28px;
+  }
+  .ring-svg { transform: rotate(-90deg); }
+  .ring-bg { fill: none; stroke: var(--border); stroke-width: 12; }
+  .ring-arc {
+    fill: none; stroke-width: 12; stroke-linecap: round;
+    stroke-dasharray: 502;
+    stroke-dashoffset: 502;
+    transition: stroke-dashoffset 1.4s cubic-bezier(.4,0,.2,1), stroke .5s;
+  }
+  .ring-inner {
+    position: absolute; top: 50%; left: 50%;
+    transform: translate(-50%,-50%); text-align: center;
+  }
+  .ring-pts {
+    font-size: 42px; font-weight: 900; line-height: 1;
+    background: var(--grad); -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  .ring-max { font-size: 14px; color: var(--muted); margin-top: 2px; }
+  .results-title {
+    font-size: clamp(22px, 4vw, 30px); font-weight: 900;
+    letter-spacing: -.75px; margin-bottom: 8px;
+  }
+  .results-sub { font-size: 16px; color: var(--muted); margin-bottom: 12px; }
+  .level-pill {
+    display: inline-block; padding: 6px 20px;
+    border-radius: 30px; font-size: 14px; font-weight: 700;
+    margin-bottom: 32px;
+  }
+
+  .results-2col {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 22px; margin-bottom: 28px;
+  }
+  .res-card {
+    background: var(--card); border-radius: 20px;
+    padding: 24px; border: 1.5px solid var(--border);
+    box-shadow: var(--shadow-sm);
+  }
+  .res-card h3 {
+    font-size: 14px; font-weight: 700; margin-bottom: 20px;
+    color: var(--muted); text-transform: uppercase;
+    letter-spacing: .06em;
+  }
+
+  .cat-row {
+    display: flex; align-items: center;
+    gap: 10px; margin-bottom: 16px;
+  }
+  .cat-row:last-child { margin-bottom: 0; }
+  .cat-row-ico { font-size: 18px; width: 26px; text-align: center; flex-shrink: 0; }
+  .cat-row-info { flex: 1; min-width: 0; }
+  .cat-row-name {
+    font-size: 12px; font-weight: 600;
+    white-space: nowrap; overflow: hidden;
+    text-overflow: ellipsis; margin-bottom: 5px;
+  }
+  .cat-bar { height: 7px; background: var(--bg); border-radius: 4px; overflow: hidden; }
+  .cat-bar-fill {
+    height: 100%; border-radius: 4px;
+    transition: width 1.2s cubic-bezier(.4,0,.2,1);
+  }
+  .cat-row-pct {
+    font-size: 12px; font-weight: 800; color: var(--p);
+    flex-shrink: 0; width: 36px; text-align: right;
+  }
+
+  .chart-wrap { position: relative; height: 220px; }
+
+  /* ── RECOMMENDATIONS ── */
+  .recs-section { margin-top: 28px; }
+  .recs-section h2 {
+    font-size: 20px; font-weight: 900;
+    letter-spacing: -.5px; margin-bottom: 18px;
+  }
+  .recs-empty {
+    background: var(--card); border-radius: 20px;
+    padding: 40px; text-align: center;
+    border: 1.5px solid var(--border);
+  }
+  .recs-empty .big { font-size: 56px; margin-bottom: 12px; display: block; }
+  .recs-empty p { color: var(--muted); font-size: 15px; }
+
+  .rec-card {
+    background: var(--card); border-radius: 18px;
+    padding: 20px 22px; margin-bottom: 14px;
+    border: 1.5px solid var(--border);
+    border-left: 5px solid;
+    display: flex; gap: 16px; align-items: flex-start;
+    box-shadow: var(--shadow-sm);
+    transition: transform .2s, box-shadow .2s;
+  }
+  .rec-card:hover {
+    transform: translateX(4px);
+    box-shadow: var(--shadow);
+  }
+  .rec-ico { font-size: 28px; flex-shrink: 0; line-height: 1; }
+  .rec-body h4 { font-size: 14px; font-weight: 800; margin-bottom: 5px; }
+  .rec-body p { font-size: 13px; color: var(--muted); line-height: 1.55; }
+  .rec-pill {
+    display: inline-block; padding: 2px 10px;
+    border-radius: 20px; font-size: 10px; font-weight: 700;
+    text-transform: uppercase; letter-spacing: .06em;
+    margin-bottom: 6px;
+  }
+  .pill-basic { background: #FEF3C7; color: #92400E; }
+  .pill-medium { background: #DBEAFE; color: #1E40AF; }
+
+  .results-actions {
+    text-align: center; margin-top: 40px;
+    padding-top: 32px; border-top: 1.5px solid var(--border);
+  }
+  .results-actions p {
+    color: var(--muted); font-size: 13px; margin-top: 12px;
+  }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 640px) {
+    .levels { grid-template-columns: 1fr; padding-left: 0; }
+    .comp-desc, .levels-lbl { margin-left: 0; }
+    .results-2col { grid-template-columns: 1fr; }
+    .stats-row { gap: 28px; }
+    .algo-card { flex-direction: column; gap: 10px; }
+    .cat-header { flex-direction: column; gap: 12px; }
+    .hdr-logo span { display: none; }
+    .bar-labels { display: none; }
+    .ring-wrap { width: 150px; height: 150px; }
+    .ring-pts { font-size: 34px; }
+  }
+
+  /* ── CONFETTI ANIMATION ── */
+  .confetti-bit {
+    position: fixed; width: 10px; height: 10px; top: -20px;
+    border-radius: 2px; animation: confettiFall linear forwards;
+    pointer-events: none; z-index: 9999;
+  }
+  @keyframes confettiFall {
+    to { transform: translateY(110vh) rotate(720deg); opacity: 0; }
+  }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header class="hdr">
+  <div class="hdr-inner">
+    <div class="hdr-logo">РТК ИТ <span>| Цифровые компетенции</span></div>
+    <div class="hdr-step" id="hdrStep"></div>
+  </div>
+  <div class="hdr-bar">
+    <div class="bar-bg"><div class="bar-fill" id="barFill" style="width:0%"></div></div>
+    <div class="bar-labels" id="barLabels"></div>
+  </div>
+</header>
+
+<!-- SCREEN: WELCOME -->
+<div id="s-welcome" class="screen active">
+  <div class="wrap">
+    <div class="welcome-hero">
+      <span class="big-emoji">🚀</span>
+      <h1>Оценка цифровых<br>компетенций</h1>
+      <p class="lead">Узнай свой уровень цифровых навыков, получи персональный результат и рекомендации по развитию</p>
+    </div>
+
+    <div class="stats-row">
+      <div class="stat"><div class="stat-n">18</div><div class="stat-l">компетенций</div></div>
+      <div class="stat"><div class="stat-n">5</div><div class="stat-l">категорий</div></div>
+      <div class="stat"><div class="stat-n">~10</div><div class="stat-l">минут</div></div>
+      <div class="stat"><div class="stat-n">54</div><div class="stat-l">макс. баллов</div></div>
+    </div>
+
+    <div class="cats-grid" id="catThumbs"></div>
+
+    <div class="algo-card">
+      <div class="ai">💡</div>
+      <div>
+        <h3>Как проходить оценку</h3>
+        <ul>
+          <li>Читай описание компетенции и три уровня владения ею</li>
+          <li>Честно выбери тот уровень, который отражает твою реальную практику</li>
+          <li>В конце получишь итоговый балл, диаграмму и персональные рекомендации</li>
+          <li>Нет правильных или неправильных ответов — это точка роста, не экзамен</li>
+        </ul>
+      </div>
+    </div>
+
+    <div style="text-align:center; margin-top:8px;">
+      <button class="btn btn-primary btn-lg" onclick="startAssessment()">
+        Начать оценку →
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- SCREEN: CATEGORY (dynamic) -->
+<div id="s-category" class="screen">
+  <div class="wrap" id="catWrap"></div>
+</div>
+
+<!-- SCREEN: RESULTS -->
+<div id="s-results" class="screen">
+  <div class="wrap">
+    <div class="results-top">
+      <div class="ring-wrap">
+        <svg class="ring-svg" width="180" height="180" viewBox="0 0 180 180">
+          <circle class="ring-bg" cx="90" cy="90" r="80"/>
+          <circle class="ring-arc" id="ringArc" cx="90" cy="90" r="80"/>
+        </svg>
+        <div class="ring-inner">
+          <div class="ring-pts" id="rScore">0</div>
+          <div class="ring-max">из 54</div>
+        </div>
+      </div>
+      <div class="results-title" id="rTitle"></div>
+      <div class="results-sub" id="rSub"></div>
+      <div class="level-pill" id="rPill"></div>
+    </div>
+
+    <div class="results-2col">
+      <div class="res-card">
+        <h3>По категориям</h3>
+        <div id="catBars"></div>
+      </div>
+      <div class="res-card">
+        <h3>Профиль компетенций</h3>
+        <div class="chart-wrap"><canvas id="radarChart"></canvas></div>
+      </div>
+    </div>
+
+    <div class="recs-section">
+      <h2>✨ Рекомендации по развитию</h2>
+      <div id="recsList"></div>
+    </div>
+
+    <div class="results-actions">
+      <div style="display:flex; gap:12px; justify-content:center; flex-wrap:wrap;">
+        <button class="btn btn-primary" onclick="downloadPDF()" id="btnPDF">
+          ⬇ Скачать PDF
+        </button>
+        <button class="btn btn-ghost" onclick="restart()">
+          ↺ Пройти заново
+        </button>
+      </div>
+      <p>PDF формируется прямо в браузере — данные никуда не отправляются</p>
+    </div>
+  </div>
+</div>
+
+<script>
+/* ═══════════════════════════════════════════════════════════
+   DATA
+═══════════════════════════════════════════════════════════ */
+const CATEGORIES = [
+  {
+    id: 'info',
+    icon: '📊',
+    title: 'Информационная грамотность',
+    subtitle: 'и работа с данными',
+    desc: 'Способность эффективно находить, критически оценивать информацию и использовать данные для принятия обоснованных бизнес-решений',
+    competencies: [
+      {
+        id: 'search',
+        title: 'Поиск и критика информации',
+        desc: 'Умение находить нужные данные в огромном массиве информации, отличать достоверные источники от фейков, быстро верифицировать цифры/утверждения по первоисточникам.',
+        levels: [
+          'Умеет находить информацию по чёткому запросу в Google и корпоративной базе знаний',
+          'Сравнивает данные из разных источников, выявляет противоречия, проверяет факты в 3 источниках',
+          'Строит системы мониторинга, обучает коллег верификации, создаёт корпоративные базы знаний'
+        ],
+        recs: [
+          'Практикуй проверку любого факта в 3 независимых источниках. Освой операторы поиска Google: site:, filetype:, "точная фраза". Пройди курс «Критическое мышление с использованием ИИ».',
+          'Создай личную базу знаний (Notion, Confluence). Настрой Google Alerts по ключевым темам. Изучи инструменты мониторинга: Feedly, Mention.'
+        ]
+      },
+      {
+        id: 'analysis',
+        title: 'Анализ и интерпретация данных',
+        desc: 'Понимание ключевых метрик продукта/бизнеса, способность видеть за цифрами закономерности, проблемы и точки роста.',
+        levels: [
+          'Может прочитать готовый график и ответить на вопрос «что выросло/упало»',
+          'Самостоятельно строит срезы в Excel, видит взаимосвязи метрик, отвечает на вопрос «почему это произошло»',
+          'Работает со сложными SQL-запросами, строит прогнозные модели, применяет статистические методы'
+        ],
+        recs: [
+          'Начни со сводных таблиц в Excel и базовых графиков. Пройди курс «Click от А до Я». Попроси коллегу объяснить 3 ключевые метрики твоего продукта.',
+          'Изучи SQL — даже базовые SELECT/WHERE/GROUP BY кардинально расширяют возможности. Попробуй Tableau Public или Power BI для визуализации. Пройди Практикум «Работа с данными».'
+        ]
+      },
+      {
+        id: 'decisions',
+        title: 'Принятие решений на основе данных',
+        desc: 'Способность опираться на цифры и объективные показатели, а не на интуицию или личные предпочтения, при выборе стратегии действий.',
+        levels: [
+          'Знает, что данные важны, но в стрессовой ситуации принимает решения интуитивно',
+          'Регулярно использует данные для обоснования решений, ссылается на метрики в коммуникации',
+          'Инициирует сбор новых данных, строит Data-Driven культуру в команде'
+        ],
+        recs: [
+          'Выработай привычку: перед любым решением записывай «какие данные у меня есть?». Пройди курс «Принятие бизнес-решений». Замени фразы "мне кажется" на конкретные цифры.',
+          'Начни документировать гипотезы и результаты их проверки. Внедри A/B тесты для ключевых решений. Проводи ретроспективы с анализом данных.'
+        ]
+      }
+    ]
+  },
+  {
+    id: 'comm',
+    icon: '💬',
+    title: 'Коммуникация и коллаборация',
+    subtitle: 'в цифровой среде',
+    desc: 'Способность эффективно взаимодействовать в распределённой цифровой среде, соблюдая нормы цифрового этикета',
+    competencies: [
+      {
+        id: 'async',
+        title: 'Асинхронная коммуникация',
+        desc: 'Умение доносить мысли в письменной форме так, чтобы они были понятны получателю без дополнительных уточнений и созвонов.',
+        levels: [
+          'Пишет короткие сообщения, часто требующие уточнений',
+          'Использует структуру «что–зачем–когда» в письмах и задачах',
+          'Создаёт шаблоны и стандарты асинхронной коммуникации для всей команды'
+        ],
+        recs: [
+          'Перед отправкой задай себе вопрос: «Поймёт ли получатель задачу без звонка?». Используй структуру: контекст → суть → ожидаемый результат → дедлайн. Пройди курс «Коммуникация и этикет в цифровой среде».',
+          'Создай личные шаблоны для типовых задач. Используй форматирование: заголовки, списки, выделения. Учитывай часовые пояса при постановке дедлайнов.'
+        ]
+      },
+      {
+        id: 'etiquette',
+        title: 'Цифровой этикет',
+        desc: 'Понимание негласных правил общения в цифровых каналах, уважение к чужому времени и границам.',
+        levels: [
+          'Знает основные правила, но иногда нарушает их (пишет в 2 ночи в общий чат)',
+          'Соблюдает нормы этикета, уважает чужие границы',
+          'Транслирует культуру общения новичкам, модерирует цифровое пространство команды'
+        ],
+        recs: [
+          'Правило: выбирай канал сообразно срочности — синхронный (звонок) только для реально срочного. Пройди курс «Коммуникация и этикет в цифровой среде» и «Удалённые совещания».',
+          'Возьми на себя роль хранителя культуры коммуникации в команде. Создай краткий гайд по каналам коммуникации и поделись с командой.'
+        ]
+      },
+      {
+        id: 'tools',
+        title: 'Работа с офисным ПО и таск-трекерами',
+        desc: 'Уверенное владение инструментами для планирования задач и создания документов и таблиц.',
+        levels: [
+          'Создаёт простые документы и задачи, работает только с базовым функционалом',
+          'Использует автоматизацию, сводные таблицы, настраивает дашборды под себя',
+          'Обучает коллег, оптимизирует рабочие процессы через настройку инструментов'
+        ],
+        recs: [
+          'Ежедневно веди список задач в цифровом виде (Яга, Ёжка, Jira). Пройди курс «Работа в Jira». Освой горячие клавиши основных инструментов — это экономит часы.',
+          'Изучи макросы и автоматические фильтры. Курс «Мой Офис: Работа с таблицами» поможет перейти на продвинутый уровень. Создай шаблоны для повторяющихся документов.'
+        ]
+      },
+      {
+        id: 'collab',
+        title: 'Совместная работа с документами',
+        desc: 'Способность работать в режиме реального времени над общими документами, оставлять обратную связь и принимать правки.',
+        levels: [
+          'Может открыть общий документ, но часто создаёт конфликты версий',
+          'Активно комментирует, предлагает правки, умеет разрешать конфликты версий',
+          'Организует совместную работу над сложными документами с большим количеством участников'
+        ],
+        recs: [
+          'Никогда не скачивай документ и не редактируй локально — всегда работай в онлайне. Изучи разницу режимов: комментирование/редактирование/просмотр. Курс «Мой Офис: Работа с таблицами».',
+          'Освой инструменты согласования: @упоминания, комментарии, треды. Договорись с командой о процессе работы с документами и версиями.'
+        ]
+      },
+      {
+        id: 'prompting',
+        title: 'Использование AI (промпт-инжиниринг)',
+        desc: 'Умение формулировать запросы к нейросетям для получения качественного, релевантного результата.',
+        levels: [
+          'Может задать простой вопрос ChatGPT, получает поверхностный ответ',
+          'Строит сложные промпты, использует цепочки запросов, добивается точных результатов',
+          'Обучает коллег, создаёт библиотеки промптов, настраивает кастомные AI-решения'
+        ],
+        recs: [
+          'Освой структуру промпта: роль + контекст + задача + формат + ограничения. Пройди курс «Введение в искусственный интеллект» и Практикум «Промптинг».',
+          'Изучи advanced техники: Chain-of-Thought, Few-shot learning, Role prompting. Пройди практикум «Уверенный пользователь ИИ». Создай личную библиотеку промптов.'
+        ]
+      }
+    ]
+  },
+  {
+    id: 'create',
+    icon: '⚡',
+    title: 'Создание цифрового',
+    subtitle: 'контента и продуктов',
+    desc: 'Способность создавать новое с помощью технологий, выходя за рамки простого потребления готовых решений',
+    competencies: [
+      {
+        id: 'aiwork',
+        title: 'Интеграция AI в рабочий процесс',
+        desc: 'Способность встраивать AI-инструменты в повседневные задачи для ускорения и автоматизации работы.',
+        levels: [
+          'Пробует AI-инструменты, но не встроил их в регулярную практику',
+          'Ежедневно использует AI для ускорения работы, экономит часы рабочего времени',
+          'Перестраивает рабочие процессы команды с учётом возможностей AI'
+        ],
+        recs: [
+          'Выбери 3 рутинные задачи и попробуй делегировать каждую AI на этой неделе (письма, протоколы, резюме документов). Курс «Искусственный интеллект для бизнеса: от идеи до результата».',
+          'Составь карту рабочих процессов и отметь, где AI может сэкономить >30 минут в день. Практикум «Продвинутый ИИ»: создание ассистентов под конкретные задачи.'
+        ]
+      },
+      {
+        id: 'devbasics',
+        title: 'Понимание основ разработки (non-tech)',
+        desc: 'Базовое понимание технологических процессов, позволяющее эффективно коммуницировать с техническими специалистами.',
+        levels: [
+          'Знает базовые термины, но путается в процессах',
+          'Может поддержать технический диалог, реалистично оценивает сроки разработки',
+          'Участвует в проектировании архитектуры, предлагает технические решения'
+        ],
+        recs: [
+          'Изучи базовые понятия: фронтенд/бэкенд, API, база данных, сервер, жизненный цикл разработки. Курс «Взаимодействие ИТ и бизнеса» поможет выстроить общий язык с разработчиками.',
+          'Попрактикуйся писать технические задания. Участвуй в стендапах команды разработки. Изучи методологию Agile/Scrum на практике.'
+        ]
+      },
+      {
+        id: 'customize',
+        title: 'Адаптация и настройка инструментов',
+        desc: 'Способность кастомизировать цифровые инструменты под свои задачи и связывать их между собой.',
+        levels: [
+          'Пользуется готовыми настройками инструментов, не кастомизируя их',
+          'Настраивает инструменты под себя, автоматизирует простые связки',
+          'Создаёт сложные интеграции, пишет скрипты, обучает коллег настройке'
+        ],
+        recs: [
+          'Начни с no-code: Zapier или Make для автоматизации простых задач (уведомления, перекладывание данных). Изучи настройки своих основных инструментов — большинство людей использует 20% возможностей.',
+          'Попробуй вайбкодинг: сформулируй задачу в ChatGPT/Claude — получи готовый Python-скрипт. Курс по Python в Школе программирования. Планируется курс по вайбкодингу — следи за обновлениями.'
+        ]
+      },
+      {
+        id: 'ailiteracy',
+        title: 'ИИ-грамотность',
+        desc: 'Понимание возможностей и ограничений ИИ, этических аспектов и принципов работы больших языковых моделей.',
+        levels: [
+          'Слышал про AI, но не понимает его ограничений',
+          'Осознанно использует AI, проверяет результаты, знает о рисках галлюцинаций',
+          'Формирует политики использования AI в компании, обучает коллег'
+        ],
+        recs: [
+          'Важно понять: AI галлюцинирует — всегда проверяй факты и цифры. Никогда не загружай конфиденциальные данные компании в публичные модели. Курс «Искусственный интеллект: погружение в технологию».',
+          'Изучи разницу между моделями: GPT-4, Claude, YandexGPT — у каждой свои сильные стороны. Создай памятку по правилам работы с AI для своей команды.'
+        ]
+      }
+    ]
+  },
+  {
+    id: 'security',
+    icon: '🛡️',
+    title: 'Безопасность и',
+    subtitle: 'решение проблем',
+    desc: 'Привычка мыслить в парадигме безопасности и самостоятельность в решении технических проблем',
+    competencies: [
+      {
+        id: 'cyber',
+        title: 'Управление рисками кибербезопасности',
+        desc: 'Понимание угроз цифровой среды и автоматическое соблюдение правил кибербезопасности.',
+        levels: [
+          'Знает правила, но иногда ленится их соблюдать',
+          'Неукоснительно соблюдает правила безопасности, заразителен в своём примере',
+          'Выявляет уязвимости в процессах, инициирует улучшение политик безопасности'
+        ],
+        recs: [
+          'Три обязательных шага сегодня: 1) Включи 2FA везде, где есть такая опция. 2) Проверь, нет ли у тебя одинаковых паролей. 3) Пройди курс «Фишинг: поймай меня, если сможешь». Курс «Кибербезопасность: правила игры».',
+          'Начни использовать менеджер паролей (Bitwarden, 1Password). Пройди курсы «Мобильная безопасность» и «Обработка и защита персональных данных». Стань амбассадором безопасности в команде.'
+        ]
+      },
+      {
+        id: 'techsolve',
+        title: 'Решение технических проблем',
+        desc: 'Способность самостоятельно диагностировать и решать типовые технические проблемы до обращения к специалисту.',
+        levels: [
+          'При любой проблеме сразу зовёт сисадмина или коллегу',
+          'Решает большинство типовых проблем сам, обращается только в сложных случаях',
+          'Пишет инструкции для коллег, автоматизирует решение частых проблем'
+        ],
+        recs: [
+          'Выработай алгоритм: 1) Перезагрузи. 2) Прочитай сообщение об ошибке. 3) Загугли точный текст ошибки. 4) Попроси AI помочь разобраться. Только потом зови специалиста.',
+          'Начни документировать решения типовых проблем в личную базу знаний. Научись читать логи приложений. Делись решениями с командой.'
+        ]
+      },
+      {
+        id: 'incident',
+        title: 'Инцидент-мышление',
+        desc: 'Способность быстро и хладнокровно реагировать на цифровые инциденты: сбои, утечки, атаки.',
+        levels: [
+          'При сбоях теряется, ждёт указаний',
+          'Действует по инструкции, чётко коммуницирует проблему',
+          'Координирует действия команды при инцидентах, разрабатывает планы реагирования'
+        ],
+        recs: [
+          'Запомни формулу репорта об инциденте: Что случилось → Когда → Симптомы → Шаги воспроизведения → Скриншот/лог → Влияние на бизнес. Найди и сохрани контакты ответственных за инциденты в компании.',
+          'Изучи playbook по инцидентам в твоей компании. Проведи тренировку — разбери кейс прошлого инцидента с командой. Предложи создать карту эскалации для типовых сценариев.'
+        ]
+      },
+      {
+        id: 'trends',
+        title: 'Понимание технологических трендов',
+        desc: 'Осведомлённость о ключевых технологических трендах и способность оценивать их применимость для бизнеса.',
+        levels: [
+          'Знает тренды на уровне новостей, но не связывает их с работой',
+          'Анализирует тренды применительно к своему продукту/отделу',
+          'Формирует технологическую стратегию, предсказывает развитие рынка'
+        ],
+        recs: [
+          'Подпишись на 2-3 качественных источника по IT-трендам (Хабр, TechCrunch, MIT Technology Review). Каждую неделю задавай вопрос: «Как этот тренд влияет на мою работу?» Скоро выйдет курс «Трендвотчинг».',
+          'Веди дайджест трендов для команды. Научись отличать хайп от реально работающих технологий через Gartner Hype Cycle. Предлагай пилоты новых технологий с чёткими критериями успеха.'
+        ]
+      }
+    ]
+  },
+  {
+    id: 'strategy',
+    icon: '🎯',
+    title: 'Стратегическое',
+    subtitle: 'использование технологий',
+    desc: 'Способность видеть технологические возможности и использовать их для достижения бизнес-целей',
+    competencies: [
+      {
+        id: 'toolchoice',
+        title: 'Выбор инструментов',
+        desc: 'Способность выбирать оптимальные цифровые инструменты под задачу с учётом цены, времени внедрения и пользы.',
+        levels: [
+          'Использует то, что дали, или то, что первым нашёл',
+          'Сознательно выбирает инструменты под задачу, проводит сравнение',
+          'Формирует технологический стек отдела/компании, оптимизирует затраты на ПО'
+        ],
+        recs: [
+          'Перед выбором инструмента задай 4 вопроса: функционал покрывает задачу? цена адекватна? безопасно для данных компании? как быстро смогу освоить? Не проси разработку "своей" программы, если есть готовый SaaS.',
+          'Создай матрицу сравнения для ключевых инструментов команды. Внедряй пилоты на 2-4 недели перед масштабированием. Учитывай TCO (Total Cost of Ownership): обучение, поддержка, интеграция.'
+        ]
+      },
+      {
+        id: 'customer',
+        title: 'Клиентоцентричность через цифру',
+        desc: 'Понимание того, как цифровые каналы влияют на опыт пользователя, и выстраивание бесшовного клиентского пути.',
+        levels: [
+          'Думает о функциональности, а не об опыте пользователя',
+          'Регулярно изучает пользовательские пути (CJM), предлагает улучшения',
+          'Выстраивает цифровую стратегию вокруг потребностей клиента'
+        ],
+        recs: [
+          'Попробуй пройти клиентский путь своего продукта/сервиса глазами пользователя — запиши все точки трения. Пройди курс «Инструменты клиентоцентричности». Внедри правило: любое улучшение начинается с вопроса «как это влияет на пользователя?»',
+          'Изучи метод Customer Journey Map и примени к своему продукту. Настрой сбор и анализ пользовательских метрик. Предложи команде проводить регулярные UX-ревью.'
+        ]
+      }
+    ]
+  }
+];
+
+const TOTAL_MAX = CATEGORIES.reduce((s, c) => s + c.competencies.length * 3, 0); // 54
+
+/* ═══════════════════════════════════════════════════════════
+   STATE
+═══════════════════════════════════════════════════════════ */
+let answers = {}; // { compId: 1|2|3 }
+let currentCatIdx = 0;
+let radarChart = null;
+
+/* ═══════════════════════════════════════════════════════════
+   INIT
+═══════════════════════════════════════════════════════════ */
+(function init() {
+  // Build category thumbnails on welcome screen
+  const grid = document.getElementById('catThumbs');
+  CATEGORIES.forEach(cat => {
+    const div = document.createElement('div');
+    div.className = 'cat-thumb';
+    div.innerHTML = `
+      <span class="ico">${cat.icon}</span>
+      <div class="nm">${cat.title}</div>
+      <div class="cnt">${cat.competencies.length} компетенции</div>
+    `;
+    grid.appendChild(div);
+  });
+
+  // Build progress bar labels
+  const lbls = document.getElementById('barLabels');
+  CATEGORIES.forEach((cat, i) => {
+    const span = document.createElement('span');
+    span.className = 'bar-lbl';
+    span.textContent = cat.icon + ' ' + cat.title.split(' ').slice(0,2).join(' ');
+    span.id = 'lbl-' + i;
+    lbls.appendChild(span);
+  });
+})();
+
+/* ═══════════════════════════════════════════════════════════
+   NAVIGATION
+═══════════════════════════════════════════════════════════ */
+function showScreen(id) {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function startAssessment() {
+  currentCatIdx = 0;
+  renderCategory(0);
+  showScreen('s-category');
+  updateHeader();
+}
+
+function renderCategory(idx) {
+  const cat = CATEGORIES[idx];
+  const wrap = document.getElementById('catWrap');
+
+  let html = `
+    <div class="cat-header">
+      <div class="cat-header-ico">${cat.icon}</div>
+      <div class="cat-header-body">
+        <div class="cat-badge">Категория ${idx + 1} из ${CATEGORIES.length}</div>
+        <h2>${cat.title} ${cat.subtitle}</h2>
+        <p>${cat.desc}</p>
+      </div>
+    </div>
+  `;
+
+  cat.competencies.forEach((comp, ci) => {
+    const globalNum = CATEGORIES.slice(0, idx).reduce((s, c) => s + c.competencies.length, 0) + ci + 1;
+    const answered = answers[comp.id] !== undefined;
+    html += `
+      <div class="comp-card ${answered ? 'done' : ''}" id="card-${comp.id}">
+        <div class="comp-card-top">
+          <div class="comp-num" id="num-${comp.id}">${globalNum}</div>
+          <div class="comp-title">${comp.title}</div>
+          <div class="comp-check">✓</div>
+        </div>
+        <div class="comp-desc">${comp.desc}</div>
+        <div class="levels-lbl">Выбери свой уровень</div>
+        <div class="levels">
+          ${[1,2,3].map(lv => `
+            <div class="lv lv${lv}">
+              <input type="radio" name="${comp.id}" id="${comp.id}_${lv}" value="${lv}"
+                ${answers[comp.id] === lv ? 'checked' : ''}
+                onchange="onAnswer('${comp.id}', ${lv})">
+              <label class="lv-card" for="${comp.id}_${lv}">
+                <span class="lv-badge">${['Базовый','Средний','Продвинутый'][lv-1]}</span>
+                <span class="lv-text">${comp.levels[lv-1]}</span>
+              </label>
+            </div>
+          `).join('')}
+        </div>
+      </div>
+    `;
+  });
+
+  const isLast = idx === CATEGORIES.length - 1;
+  const answeredInCat = cat.competencies.filter(c => answers[c.id] !== undefined).length;
+
+  html += `
+    <div class="warn-msg" id="warn-${idx}">
+      ⚠️ Пожалуйста, ответь на все вопросы этой категории, прежде чем продолжить.
+    </div>
+    <div class="nav-row">
+      ${idx > 0
+        ? `<button class="btn btn-ghost" onclick="prevCat()">← Назад</button>`
+        : `<span></span>`
+      }
+      <div class="nav-hint"><b>${answeredInCat}</b> из <b>${cat.competencies.length}</b> отвечено</div>
+      <button class="btn btn-primary" onclick="${isLast ? 'finishAssessment' : 'nextCat'}()">
+        ${isLast ? 'Получить результат ✨' : 'Далее →'}
+      </button>
+    </div>
+  `;
+
+  wrap.innerHTML = html;
+}
+
+function onAnswer(compId, value) {
+  answers[compId] = value;
+  const card = document.getElementById('card-' + compId);
+  card.classList.add('done');
+  updateNavHint();
+  updateHeader();
+}
+
+function updateNavHint() {
+  const cat = CATEGORIES[currentCatIdx];
+  const answered = cat.competencies.filter(c => answers[c.id] !== undefined).length;
+  const hint = document.querySelector('.nav-hint');
+  if (hint) hint.innerHTML = `<b>${answered}</b> из <b>${cat.competencies.length}</b> отвечено`;
+}
+
+function nextCat() {
+  const cat = CATEGORIES[currentCatIdx];
+  const allAnswered = cat.competencies.every(c => answers[c.id] !== undefined);
+  if (!allAnswered) {
+    const w = document.getElementById('warn-' + currentCatIdx);
+    w.classList.add('show');
+    // Scroll to first unanswered
+    const first = cat.competencies.find(c => answers[c.id] === undefined);
+    if (first) document.getElementById('card-' + first.id).scrollIntoView({ behavior: 'smooth', block: 'center' });
+    return;
+  }
+  currentCatIdx++;
+  renderCategory(currentCatIdx);
+  updateHeader();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function prevCat() {
+  currentCatIdx--;
+  renderCategory(currentCatIdx);
+  updateHeader();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function updateHeader() {
+  const totalComps = CATEGORIES.reduce((s, c) => s + c.competencies.length, 0);
+  const answered = Object.keys(answers).length;
+  const pct = (answered / totalComps) * 100;
+
+  document.getElementById('barFill').style.width = pct + '%';
+
+  // On category screens
+  if (document.getElementById('s-category').classList.contains('active')) {
+    document.getElementById('hdrStep').textContent =
+      `Категория ${currentCatIdx + 1} / ${CATEGORIES.length}`;
+  } else if (document.getElementById('s-results').classList.contains('active')) {
+    document.getElementById('hdrStep').textContent = '✓ Оценка завершена';
+  } else {
+    document.getElementById('hdrStep').textContent = '';
+  }
+
+  // Update bar labels
+  CATEGORIES.forEach((cat, i) => {
+    const el = document.getElementById('lbl-' + i);
+    if (!el) return;
+    el.className = 'bar-lbl';
+    if (i < currentCatIdx) el.classList.add('done');
+    if (i === currentCatIdx) el.classList.add('active');
+  });
+}
+
+/* ═══════════════════════════════════════════════════════════
+   RESULTS
+═══════════════════════════════════════════════════════════ */
+function finishAssessment() {
+  const cat = CATEGORIES[currentCatIdx];
+  const allAnswered = cat.competencies.every(c => answers[c.id] !== undefined);
+  if (!allAnswered) {
+    const w = document.getElementById('warn-' + currentCatIdx);
+    w.classList.add('show');
+    const first = cat.competencies.find(c => answers[c.id] === undefined);
+    if (first) document.getElementById('card-' + first.id).scrollIntoView({ behavior: 'smooth', block: 'center' });
+    return;
+  }
+
+  buildResults();
+  showScreen('s-results');
+  document.getElementById('hdrStep').textContent = '✓ Оценка завершена';
+  document.getElementById('barFill').style.width = '100%';
+  CATEGORIES.forEach((c, i) => {
+    const el = document.getElementById('lbl-' + i);
+    if (el) el.className = 'bar-lbl done';
+  });
+
+  // Trigger ring animation after brief delay
+  setTimeout(animateRing, 300);
+  // Confetti
+  setTimeout(launchConfetti, 600);
+}
+
+function buildResults() {
+  // Calculate total score
+  const total = Object.values(answers).reduce((s, v) => s + v, 0);
+
+  // Category scores
+  const catScores = CATEGORIES.map(cat => {
+    const score = cat.competencies.reduce((s, c) => s + (answers[c.id] || 0), 0);
+    const max = cat.competencies.length * 3;
+    return { ...cat, score, max, pct: Math.round((score / max) * 100) };
+  });
+
+  // Determine overall level
+  const pct = (total / TOTAL_MAX) * 100;
+  let level, color, gradient, desc;
+  if (pct < 40) {
+    level = 'Начинающий пользователь'; color = '#F59E0B'; gradient = '#FEF3C7';
+    desc = 'Хороший старт! Есть много точек роста — используй рекомендации ниже.';
+  } else if (pct < 60) {
+    level = 'Уверенный пользователь'; color = '#3B82F6'; gradient = '#DBEAFE';
+    desc = 'Крепкий фундамент! Прицельное развитие слабых зон даст быстрый результат.';
+  } else if (pct < 80) {
+    level = 'Цифровой профессионал'; color = '#8B5CF6'; gradient = '#F5F3FF';
+    desc = 'Сильный уровень! Фокусируйся на продвинутых навыках и делись знаниями с командой.';
+  } else {
+    level = 'Цифровой лидер'; color = '#10B981'; gradient = '#D1FAE5';
+    desc = 'Отличный результат! Ты — ролевая модель цифровой зрелости для команды.';
+  }
+
+  // Set score display
+  document.getElementById('rScore').textContent = total;
+  document.getElementById('rTitle').textContent = level;
+  document.getElementById('rSub').textContent = desc;
+
+  const pill = document.getElementById('rPill');
+  pill.textContent = `${total} / ${TOTAL_MAX} баллов · ${Math.round(pct)}%`;
+  pill.style.background = gradient;
+  pill.style.color = color;
+
+  // Store for ring animation
+  window._ringPct = pct;
+  window._ringColor = color;
+
+  // Category bars
+  const barsEl = document.getElementById('catBars');
+  barsEl.innerHTML = catScores.map(cs => `
+    <div class="cat-row">
+      <div class="cat-row-ico">${cs.icon}</div>
+      <div class="cat-row-info">
+        <div class="cat-row-name">${cs.title}</div>
+        <div class="cat-bar">
+          <div class="cat-bar-fill" data-pct="${cs.pct}" style="width:0%; background:${
+            cs.pct >= 80 ? '#10B981' : cs.pct >= 55 ? '#8B5CF6' : cs.pct >= 35 ? '#3B82F6' : '#F59E0B'
+          }"></div>
+        </div>
+      </div>
+      <div class="cat-row-pct">${cs.pct}%</div>
+    </div>
+  `).join('');
+
+  setTimeout(() => {
+    document.querySelectorAll('.cat-bar-fill').forEach(el => {
+      el.style.width = el.dataset.pct + '%';
+    });
+  }, 400);
+
+  // Radar chart
+  buildRadar(catScores);
+
+  // Recommendations
+  buildRecs();
+}
+
+function animateRing() {
+  const pct = window._ringPct || 0;
+  const color = window._ringColor || '#4F46E5';
+  const arc = document.getElementById('ringArc');
+  const circumference = 502;
+  arc.style.stroke = color;
+  arc.style.strokeDashoffset = circumference - (circumference * pct / 100);
+}
+
+function buildRadar(catScores) {
+  const ctx = document.getElementById('radarChart').getContext('2d');
+  if (radarChart) { radarChart.destroy(); }
+
+  radarChart = new Chart(ctx, {
+    type: 'radar',
+    data: {
+      labels: catScores.map(cs => cs.title.split(' ').slice(0, 2).join(' ')),
+      datasets: [{
+        label: 'Твой уровень',
+        data: catScores.map(cs => cs.pct),
+        backgroundColor: 'rgba(79, 70, 229, 0.15)',
+        borderColor: '#4F46E5',
+        borderWidth: 2.5,
+        pointBackgroundColor: '#4F46E5',
+        pointRadius: 5,
+        pointHoverRadius: 7
+      }]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      scales: {
+        r: {
+          min: 0, max: 100,
+          ticks: { display: false, stepSize: 25 },
+          grid: { color: 'rgba(0,0,0,.06)' },
+          pointLabels: { font: { size: 11, weight: '600' }, color: '#64748B' }
+        }
+      },
+      plugins: { legend: { display: false } },
+      animation: { duration: 1200, easing: 'easeInOutQuart' }
+    }
+  });
+}
+
+function buildRecs() {
+  const el = document.getElementById('recsList');
+  const recs = [];
+
+  CATEGORIES.forEach(cat => {
+    cat.competencies.forEach(comp => {
+      const score = answers[comp.id] || 1;
+      if (score < 3) {
+        const recIdx = score - 1; // 0 for basic, 1 for medium
+        recs.push({ comp, score, rec: comp.recs[recIdx], catIcon: cat.icon });
+      }
+    });
+  });
+
+  // Sort: lower scores first (most urgent)
+  recs.sort((a, b) => a.score - b.score);
+
+  if (recs.length === 0) {
+    el.innerHTML = `
+      <div class="recs-empty">
+        <span class="big">🏆</span>
+        <p>Wow! По всем компетенциям ты на продвинутом уровне.<br>
+        Ты — настоящий цифровой лидер. Делись знаниями с командой!</p>
+      </div>
+    `;
+    return;
+  }
+
+  const colorMap = { 1: '#F59E0B', 2: '#3B82F6' };
+  const pillMap = { 1: 'pill-basic', 2: 'pill-medium' };
+  const labelMap = { 1: 'Базовый уровень', 2: 'Средний уровень' };
+
+  el.innerHTML = recs.slice(0, 12).map(r => `
+    <div class="rec-card" style="border-left-color:${colorMap[r.score]}">
+      <div class="rec-ico">${r.catIcon}</div>
+      <div class="rec-body">
+        <div class="rec-pill ${pillMap[r.score]}">${labelMap[r.score]}</div>
+        <h4>${r.comp.title}</h4>
+        <p>${r.rec}</p>
+      </div>
+    </div>
+  `).join('');
+}
+
+/* ═══════════════════════════════════════════════════════════
+   PDF EXPORT
+═══════════════════════════════════════════════════════════ */
+function downloadPDF() {
+  const btn = document.getElementById('btnPDF');
+  btn.textContent = '⏳ Формирую PDF...';
+  btn.disabled = true;
+
+  const total = Object.values(answers).reduce((s, v) => s + v, 0);
+  const pct = Math.round((total / TOTAL_MAX) * 100);
+
+  const catScores = CATEGORIES.map(cat => {
+    const score = cat.competencies.reduce((s, c) => s + (answers[c.id] || 0), 0);
+    const max = cat.competencies.length * 3;
+    return { ...cat, score, max, pct: Math.round((score / max) * 100) };
+  });
+
+  let level, levelColor;
+  if (pct < 40)      { level = 'Начинающий пользователь'; levelColor = '#F59E0B'; }
+  else if (pct < 60) { level = 'Уверенный пользователь';  levelColor = '#3B82F6'; }
+  else if (pct < 80) { level = 'Цифровой профессионал';   levelColor = '#8B5CF6'; }
+  else               { level = 'Цифровой лидер';          levelColor = '#10B981'; }
+
+  const today = new Date().toLocaleDateString('ru-RU', { day: 'numeric', month: 'long', year: 'numeric' });
+
+  const recs = [];
+  CATEGORIES.forEach(cat => {
+    cat.competencies.forEach(comp => {
+      const score = answers[comp.id] || 1;
+      if (score < 3) recs.push({ comp, score, rec: comp.recs[score - 1], catTitle: cat.title, catIcon: cat.icon });
+    });
+  });
+  recs.sort((a, b) => a.score - b.score);
+
+  const levelLabel = { 1: 'Базовый', 2: 'Средний', 3: 'Продвинутый' };
+  const levelDot   = { 1: '#F59E0B', 2: '#3B82F6', 3: '#10B981' };
+
+  // All competencies table
+  const allRows = CATEGORIES.flatMap(cat =>
+    cat.competencies.map(comp => ({
+      cat: cat.title, catIcon: cat.icon,
+      title: comp.title, score: answers[comp.id] || 0
+    }))
+  );
+
+  const barFn = (pct, color) => `
+    <div style="background:#E2E8F0;border-radius:4px;height:8px;width:100%;margin-top:4px;">
+      <div style="background:${color};height:8px;border-radius:4px;width:${pct}%;"></div>
+    </div>`;
+
+  const html = `
+  <div style="font-family:'Segoe UI',Arial,sans-serif;color:#0F172A;background:#fff;padding:48px 44px;max-width:760px;margin:0 auto;">
+
+    <!-- HEADER -->
+    <div style="border-bottom:3px solid #4F46E5;padding-bottom:20px;margin-bottom:28px;display:flex;align-items:flex-start;justify-content:space-between;">
+      <div>
+        <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:#4F46E5;margin-bottom:6px;">РТК ИТ · Цифровые компетенции</div>
+        <div style="font-size:26px;font-weight:900;letter-spacing:-1px;line-height:1.1;">Результаты самооценки</div>
+      </div>
+      <div style="text-align:right;font-size:12px;color:#64748B;margin-top:6px;">${today}</div>
+    </div>
+
+    <!-- SCORE BLOCK -->
+    <div style="background:linear-gradient(135deg,#EEF2FF,#F5F3FF);border-radius:16px;padding:28px 32px;margin-bottom:28px;display:flex;align-items:center;gap:32px;">
+      <div style="text-align:center;flex-shrink:0;">
+        <div style="font-size:60px;font-weight:900;color:#4F46E5;line-height:1;">${total}</div>
+        <div style="font-size:14px;color:#64748B;margin-top:2px;">из ${TOTAL_MAX} баллов</div>
+        <div style="font-size:20px;font-weight:800;color:#4F46E5;margin-top:4px;">${pct}%</div>
+      </div>
+      <div>
+        <div style="display:inline-block;padding:5px 16px;background:${levelColor};color:#fff;border-radius:30px;font-size:13px;font-weight:700;margin-bottom:10px;">${level}</div>
+        <div style="font-size:15px;font-weight:700;margin-bottom:6px;">Профиль по категориям:</div>
+        ${catScores.map(cs => `
+          <div style="margin-bottom:8px;">
+            <div style="display:flex;justify-content:space-between;font-size:12px;font-weight:600;">
+              <span>${cs.icon} ${cs.title}</span>
+              <span style="color:#4F46E5;">${cs.pct}%</span>
+            </div>
+            ${barFn(cs.pct, cs.pct >= 80 ? '#10B981' : cs.pct >= 55 ? '#8B5CF6' : cs.pct >= 35 ? '#3B82F6' : '#F59E0B')}
+          </div>`).join('')}
+      </div>
+    </div>
+
+    <!-- COMPETENCY TABLE -->
+    <div style="margin-bottom:28px;">
+      <div style="font-size:15px;font-weight:900;margin-bottom:14px;letter-spacing:-.3px;">Детализация по компетенциям</div>
+      <table style="width:100%;border-collapse:collapse;font-size:12px;">
+        <thead>
+          <tr style="background:#F1F5F9;">
+            <th style="text-align:left;padding:8px 10px;font-weight:700;border-bottom:2px solid #E2E8F0;">Компетенция</th>
+            <th style="text-align:center;padding:8px 10px;font-weight:700;border-bottom:2px solid #E2E8F0;white-space:nowrap;">Уровень</th>
+            <th style="text-align:center;padding:8px 10px;font-weight:700;border-bottom:2px solid #E2E8F0;">Балл</th>
+          </tr>
+        </thead>
+        <tbody>
+          ${allRows.map((r, i) => `
+          <tr style="background:${i % 2 === 0 ? '#fff' : '#FAFBFF'};">
+            <td style="padding:7px 10px;border-bottom:1px solid #E2E8F0;">
+              <span style="color:#64748B;font-size:10px;">${r.catIcon} ${r.cat}</span><br>
+              <span style="font-weight:600;">${r.title}</span>
+            </td>
+            <td style="padding:7px 10px;border-bottom:1px solid #E2E8F0;text-align:center;">
+              <span style="background:${levelDot[r.score]}22;color:${levelDot[r.score]};padding:2px 10px;border-radius:20px;font-weight:700;font-size:11px;">${levelLabel[r.score] || '—'}</span>
+            </td>
+            <td style="padding:7px 10px;border-bottom:1px solid #E2E8F0;text-align:center;font-weight:800;color:#4F46E5;">${r.score}/3</td>
+          </tr>`).join('')}
+        </tbody>
+      </table>
+    </div>
+
+    <!-- RECOMMENDATIONS -->
+    ${recs.length > 0 ? `
+    <div>
+      <div style="font-size:15px;font-weight:900;margin-bottom:14px;letter-spacing:-.3px;">Рекомендации по развитию</div>
+      ${recs.slice(0, 10).map(r => `
+        <div style="border-left:4px solid ${r.score === 1 ? '#F59E0B' : '#3B82F6'};padding:12px 16px;margin-bottom:12px;background:${r.score === 1 ? '#FFFBEB' : '#EFF6FF'};border-radius:0 10px 10px 0;">
+          <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:${r.score === 1 ? '#92400E' : '#1E40AF'};margin-bottom:4px;">${r.catIcon} ${r.catTitle} · ${r.score === 1 ? 'Базовый уровень' : 'Средний уровень'}</div>
+          <div style="font-size:13px;font-weight:700;margin-bottom:4px;">${r.comp.title}</div>
+          <div style="font-size:12px;color:#475569;line-height:1.55;">${r.rec}</div>
+        </div>`).join('')}
+    </div>` : `
+    <div style="background:#D1FAE5;border-radius:12px;padding:20px;text-align:center;">
+      <div style="font-size:28px;margin-bottom:8px;">🏆</div>
+      <div style="font-weight:700;color:#065F46;">Продвинутый уровень по всем компетенциям!</div>
+    </div>`}
+
+    <!-- FOOTER -->
+    <div style="margin-top:36px;padding-top:16px;border-top:1px solid #E2E8F0;font-size:11px;color:#94A3B8;text-align:center;">
+      Результаты самооценки цифровых компетенций РТК ИТ · ${today}
+    </div>
+  </div>`;
+
+  const container = document.createElement('div');
+  container.innerHTML = html;
+  document.body.appendChild(container);
+
+  html2pdf().set({
+    margin: 0,
+    filename: `Цифровые_компетенции_${today.replace(/ /g,'_')}.pdf`,
+    image: { type: 'jpeg', quality: 0.98 },
+    html2canvas: { scale: 2, useCORS: true, logging: false },
+    jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' },
+    pagebreak: { mode: ['avoid-all', 'css'] }
+  }).from(container).save().then(() => {
+    document.body.removeChild(container);
+    btn.textContent = '⬇ Скачать PDF';
+    btn.disabled = false;
+  });
+}
+
+/* ═══════════════════════════════════════════════════════════
+   CONFETTI
+═══════════════════════════════════════════════════════════ */
+function launchConfetti() {
+  const colors = ['#4F46E5','#7C3AED','#06B6D4','#10B981','#F59E0B','#EF4444','#EC4899'];
+  for (let i = 0; i < 60; i++) {
+    const bit = document.createElement('div');
+    bit.className = 'confetti-bit';
+    bit.style.cssText = `
+      left: ${Math.random() * 100}vw;
+      background: ${colors[Math.floor(Math.random() * colors.length)]};
+      width: ${6 + Math.random() * 8}px;
+      height: ${6 + Math.random() * 8}px;
+      border-radius: ${Math.random() > 0.5 ? '50%' : '2px'};
+      animation-duration: ${1.5 + Math.random() * 2}s;
+      animation-delay: ${Math.random() * .8}s;
+      transform: rotate(${Math.random() * 360}deg);
+    `;
+    document.body.appendChild(bit);
+    bit.addEventListener('animationend', () => bit.remove());
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════
+   RESTART
+═══════════════════════════════════════════════════════════ */
+function restart() {
+  answers = {};
+  currentCatIdx = 0;
+  if (radarChart) { radarChart.destroy(); radarChart = null; }
+  document.getElementById('barFill').style.width = '0%';
+  CATEGORIES.forEach((c, i) => {
+    const el = document.getElementById('lbl-' + i);
+    if (el) el.className = 'bar-lbl';
+  });
+  document.getElementById('hdrStep').textContent = '';
+  showScreen('s-welcome');
+}
+</script>
+</body>
+</html>
